@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-serif);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 39 42% 93%;
+  --foreground: 165 27% 15%;
+  --border: 38 22% 78%;
+  --input: 38 22% 78%;
+  --ring: 12 65% 46%;
+  --card: 39 42% 93%;
+  --card-foreground: 165 27% 15%;
+  --card-border: 38 22% 78%;
+  --primary: 12 65% 46%;
+  --primary-foreground: 39 42% 93%;
+  --secondary: 164 28% 24%;
+  --secondary-foreground: 39 42% 93%;
+  --muted: 38 26% 86%;
+  --muted-foreground: 165 11% 38%;
+  --accent: 42 76% 54%;
+  --accent-foreground: 165 27% 15%;
+  --destructive: 4 70% 42%;
+  --destructive-foreground: 39 42% 93%;
+  --popover: 39 42% 93%;
+  --popover-foreground: 165 27% 15%;
+  --radius: 0.75rem;
+  --app-font-sans: 'DM Sans', sans-serif;
+  --app-font-serif: 'Instrument Serif', Georgia, serif;
+  --app-font-mono: 'DM Mono', monospace;
+  --shadow-soft: 0 20px 60px rgba(31, 61, 55, 0.12);
+}
+
+.dark {
+  --background: 165 27% 15%;
+  --foreground: 39 42% 93%;
+  --card: 165 24% 19%;
+  --card-foreground: 39 42% 93%;
+  --border: 164 15% 30%;
+  --input: 164 15% 30%;
+  --muted: 164 17% 25%;
+  --muted-foreground: 39 16% 72%;
+  --primary: 12 65% 53%;
+  --primary-foreground: 39 42% 93%;
+  --secondary: 42 76% 54%;
+  --secondary-foreground: 165 27% 15%;
+  --accent: 42 76% 54%;
+  --accent-foreground: 165 27% 15%;
+  --ring: 42 76% 54%;
+  --popover: 165 24% 19%;
+  --popover-foreground: 39 42% 93%;
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    margin: 0;
+  }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 4px; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--app-font-serif); }
+  .font-mono-label { font-family: var(--app-font-mono); }
+  .texture {
+    position: relative;
+    isolation: isolate;
+  }
+  .texture::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+  }
+  .reveal { animation: rise-in .8s cubic-bezier(.2,.8,.2,1) both; }
+  .reveal-delay-1 { animation-delay: .12s; }
+  .reveal-delay-2 { animation-delay: .24s; }
+  .reveal-delay-3 { animation-delay: .36s; }
+  .marquee { animation: drift 28s linear infinite; }
+  .story-link { transition: color .25s ease, transform .25s ease; }
+  .story-link:hover { transform: translateX(5px); color: hsl(var(--primary)); }
+  .lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; }
+  .lift:hover { transform: translateY(-6px); box-shadow: var(--shadow-soft); }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

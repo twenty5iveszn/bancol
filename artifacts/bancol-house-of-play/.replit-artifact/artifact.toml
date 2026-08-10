@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "BANCOL House of Play"
+description = "A cinematic cultural story hub for BANCOL, beginning with the Baganda legend of Kintu and Nambi. It brings together story, context, audio, video, and future playful learning experiences in one accessible home."
+version = "1.0.0"
+id = "artifacts/bancol-house-of-play"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24779
+
+[services.development]
+run = "pnpm --filter @workspace/bancol-house-of-play run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/bancol-house-of-play", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/bancol-house-of-play/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24779"
+BASE_PATH = "/"
